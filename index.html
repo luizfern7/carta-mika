@@ -13,11 +13,11 @@
 
   <style>
     :root {
-      /* Céu noturno escuro autêntico */
-      --bg-void: #020205;
+      /* Céu noturno escuro autêntico - 100% PRETO PURO */
+      --bg-void: #000000;
       --bg-pure-black: #000000;
       
-      /* Tons de lilás suave & acentos reais */
+      /* Tons de lilás suave & acentos reais restritos apenas ao envelope */
       --envelope-front: #533475;
       --envelope-pocket-bottom: #452467;
       --envelope-pocket-side: #3a1c57;
@@ -31,10 +31,44 @@
       --paper-bg: #fffefb;
       --paper-text: #21192e;
       --paper-border: rgba(189, 149, 60, 0.35);
-      --paper-shadow: 0 25px 70px rgba(0, 0, 0, 0.85), 0 0 40px rgba(126, 82, 179, 0.15);
+      --paper-shadow: 0 25px 70px rgba(0, 0, 0, 0.95), 0 0 40px rgba(0, 0, 0, 0.8);
       
       --gold-seal-gradient: linear-gradient(135deg, #fae29f 0%, #cf9f36 50%, #91681a 100%);
       --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #000000 !important;
+      background-color: #000000 !important;
+      font-family: 'Montserrat', sans-serif;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Canvas do Céu Estrelado Hiper-Realista */
+    #sky-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+      background-color: #000000;
     }
 
     * {
@@ -650,8 +684,8 @@
       </div>
 
       <div class="instruction-link" id="action-helper">
-        <span>Toque para abrir</span>
-        <span>✦</span>
+        <span>Clique para abrir</span>
+        <span>💜</span>
       </div>
     </section>
 
@@ -801,19 +835,8 @@
     let nextShootingStarTime = Date.now() + 2500;
 
     function renderSky() {
-      // Fundo preto puro com gradiente estelar quase imperceptível de profundidade espacial
+      // Fundo 100% PRETO PURO astronômico (sem gradientes roxos lavando a tela)
       ctx.fillStyle = '#000000';
-      ctx.fillRect(0, 0, width, height);
-
-      // Micro neblina cósmica sutil (Via Láctea)
-      const cosmicGlow = ctx.createRadialGradient(
-        width * 0.65, height * 0.25, 10,
-        width * 0.65, height * 0.25, width * 0.8
-      );
-      cosmicGlow.addColorStop(0, 'rgba(42, 22, 68, 0.08)');
-      cosmicGlow.addColorStop(0.5, 'rgba(21, 14, 38, 0.04)');
-      cosmicGlow.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = cosmicGlow;
       ctx.fillRect(0, 0, width, height);
 
       const now = Date.now();
@@ -834,8 +857,8 @@
         // Difração e halo nas estrelas de primeira magnitude
         if (s.hasGlow && currentAlpha > 0.5) {
           ctx.beginPath();
-          ctx.arc(s.x, s.y, s.r * 2.8, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${currentAlpha * 0.16})`;
+          ctx.arc(s.x, s.y, s.r * 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(${s.color.r}, ${s.color.g}, ${s.color.b}, ${currentAlpha * 0.18})`;
           ctx.fill();
         }
       }
